@@ -119,6 +119,10 @@ mat-footer-cell:last-of-type {
 }
 
 @media (max-width: 959.98px) {
+  mat-cell {
+    min-height: auto;
+  }
+
   .mat-column-image,
   .mat-column-price,
   .mat-column-product,
@@ -126,6 +130,7 @@ mat-footer-cell:last-of-type {
   .mat-column-remove {
     align-items: center;
     display: flex;
+    flex: 0 0 auto;
     justify-content: center;
     margin-bottom: $space-xs;
     width: 100%;
