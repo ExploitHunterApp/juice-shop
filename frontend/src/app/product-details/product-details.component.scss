@@ -6,12 +6,16 @@
 @use '../../styles/variables' as *;
 
 .img-thumbnail {
-  height: auto;
-  max-width: 100%;
-  padding: $space-3xs;
-  width: 200px;
-  border: var(--theme-thumbnail-border);
+  background: var(--theme-background-light);
+  border: 1px solid var(--mat-sys-outline-variant);
+  border-radius: 8px;
   box-sizing: border-box;
+  height: auto;
+  max-height: 220px;
+  max-width: 100%;
+  object-fit: contain;
+  padding: $space-m;
+  width: 200px;
 }
 
 mat-form-field {
@@ -19,7 +23,7 @@ mat-form-field {
 }
 
 p {
-  word-break: break-all;
+  word-break: break-word;
 }
 
 .btn-container button:nth-child(2) {
@@ -28,8 +32,8 @@ p {
 }
 
 .detail-divider {
-  margin-bottom: $space-m;
-  margin-top: $space-m;
+  margin-bottom: $space-l;
+  margin-top: $space-l;
 }
 
 .rw-button {
@@ -37,7 +41,11 @@ p {
 }
 
 .comment {
+  background: var(--mat-sys-surface-container);
+  border: 1px solid var(--mat-sys-outline-variant);
+  border-radius: 8px;
   margin-bottom: $space-xs;
+  padding: $space-s;
 }
 
 .review-link {
@@ -51,7 +59,12 @@ p {
 }
 
 .item-price {
-  float: left;
+  color: var(--theme-text);
+  display: inline-flex;
+  float: none;
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1;
   margin-right: $space-2xl;
   margin-top: $space-xs;
 }
@@ -65,10 +78,13 @@ p {
 }
 
 .dialogAction {
+  gap: $space-xs;
   margin-bottom: 0 !important;
+  padding-right: 0;
 }
 
 .buttons {
+  border-radius: 8px;
   padding-left: $space-m;
   padding-right: $space-m;
 }
@@ -93,6 +109,9 @@ p {
 
 h1 {
   color: var(--theme-text);
+  font-size: 1.55rem;
+  line-height: 1.2;
+  margin-top: 0;
 }
 
 div {
@@ -114,9 +133,13 @@ div {
 }
 
 .details-row {
+  background: linear-gradient(180deg, var(--mat-sys-surface-container-high), var(--mat-sys-surface-container));
+  border: 1px solid var(--mat-sys-outline-variant);
+  border-radius: 8px;
   display: flex;
   flex-direction: row;
   gap: $space-ml;
+  padding: $space-m;
 }
 
 @media (max-width: 599.98px) {
