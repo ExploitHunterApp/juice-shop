@@ -48,8 +48,7 @@ Highlights of the refreshed shopping experience:
 * Modern basket panel with scannable line items, touch-friendly quantity controls, a visible total, and a primary
   checkout action.
 
-For a detailed introduction, full list of features and architecture overview please visit the official project page:
-<https://owasp-juice.shop>
+This fork is tuned as a configurable ecommerce target for automated agents.
 
 ## Table of contents
 
@@ -61,11 +60,7 @@ For a detailed introduction, full list of features and architecture overview ple
   - [Docker Container](#docker-container)
   - [Runtime Branding Overrides](#runtime-branding-overrides)
   - [Vagrant](#vagrant)
-- [Demo](#demo)
-- [Documentation](#documentation)
-  - [Node.js version compatibility](#nodejs-version-compatibility)
-  - [Troubleshooting](#troubleshooting)
-  - [Official companion guide](#official-companion-guide)
+- [Node.js version compatibility](#nodejs-version-compatibility)
 - [Contributing](#contributing)
 - [References](#references)
 - [Merchandise](#merchandise)
@@ -74,13 +69,6 @@ For a detailed introduction, full list of features and architecture overview ple
 - [Licensing](#licensing)
 
 ## Setup
-
-> You can find some less common installation variations as well as instructions to run Juice Shop on a variety of cloud computing providers in
-> [the _Running OWASP Juice Shop_ documentation](https://pwning.owasp-juice.shop/companion-guide/latest/part1/running.html).
-
-> Some challenges require an AI/LLM provider to work properly. Check the
-> [_Setting up external dependencies_ documentation](https://pwning.owasp-juice.shop/companion-guide/snapshot/part1/running.html#_setting_up_external_dependencies)
-> for instructions on configuring local or cloud-based AI providers.
 
 ### From Sources
 
@@ -123,12 +111,13 @@ For a detailed introduction, full list of features and architecture overview ple
 "Get your own version badge on microbadger.com")
 
 1. Install [Docker](https://www.docker.com)
-2. Run `docker pull bkimminich/juice-shop`
-3. Run `docker run --rm -p 127.0.0.1:3322:3322 bkimminich/juice-shop`
-4. Browse to <http://localhost:3322> (on macOS and Windows browse to
+2. Run `docker run --rm -p 127.0.0.1:3322:3322 quay.io/justsml/juice-shop:latest`
+3. Browse to <http://localhost:3322> (on macOS and Windows browse to
    <http://192.168.99.100:3322> if you are using docker-machine instead of the native docker installation)
 
 ### Runtime Branding Overrides
+
+This is mainly to prevent mid-range LLMs from having too easy a time fingerprinting the site.
 
 Common application labels, support links, and lightweight theme values can be changed at startup with environment
 variables. These overrides work with source installs, packaged distributions, and Docker containers.
@@ -166,15 +155,10 @@ docker run --rm -p 127.0.0.1:3323:3000 \
 To run several Docker containers in parallel, keep the container-side port fixed and change only the host-side port,
 for example `-p 127.0.0.1:3324:3000`. For source or packaged installs, use `PORT=3324 npm start`.
 
-If you want goofy one-off name, theme, and product values, these links open a prefilled prompt in a new AI chat:
-
-- [Open in ChatGPT](https://chatgpt.com/?q=Generate%20fake%20retail-site%20branding%20and%20product%20override%20values%20for%20OWASP%20Juice%20Shop%20runtime%20branding.%0A%0AReturn%20only%20a%20single%20JSON%20object.%20Do%20not%20return%20a%20docker%20command%2C%20shell%20flags%2C%20markdown%2C%20code%20fences%2C%20explanations%2C%20or%20comments.%0A%0ARequired%20JSON%20keys%2C%20and%20no%20others%3A%0A-%20APPLICATION_NAME%0A-%20APPLICATION_THEME%0A-%20APPLICATION_CSS_VARIABLES%0A-%20PRODUCT_OVERRIDES%0A%0ARules%3A%0A-%20Do%20not%20include%20any%20other%20APPLICATION_%2A%20keys.%0A-%20APPLICATION_NAME%20should%20be%20a%20fun%20fake%20retail%20site%20name.%0A-%20APPLICATION_THEME%20must%20be%20exactly%20%22bluegrey-lightgreen%22.%0A-%20APPLICATION_CSS_VARIABLES%20must%20be%20a%20JSON%20object%2C%20not%20a%20string.%0A-%20CSS%20variable%20keys%20must%20start%20with%20--.%0A-%20PRODUCT_OVERRIDES%20must%20be%20a%20JSON%20object%2C%20not%20a%20string.%0A-%20PRODUCT_OVERRIDES%20keys%20must%20be%201-based%20product%20numbers%20as%20strings%2C%20such%20as%20%221%22%2C%20%222%22%2C%20or%20original%20product%20names%20such%20as%20%22Apple%20Juice%20%281000ml%29%22.%0A-%20PRODUCT_OVERRIDES%20values%20may%20include%20name%2C%20description%2C%20image%2C%20price%2C%20deluxePrice%2C%20limitPerUser%2C%20quantity%2C%20and%20reviews.%0A-%20reviews%20must%20be%20an%20array%20of%20objects%20with%20text%20and%20author%20string%20fields.%20Use%20existing%20authors%20such%20as%20admin%2C%20bender%2C%20or%20jim.%0A-%20Do%20not%20include%20challenge%20fields%20such%20as%20urlForProductTamperingChallenge%2C%20useForChristmasSpecialChallenge%2C%20keywordsForPastebinDataLeakChallenge%2C%20fileForRetrieveBlueprintChallenge%2C%20exifForBlueprintChallenge%2C%20or%20deletedDate.%0A-%20Use%20only%20straight%20ASCII%20quotes%20and%20hyphens.%0A%0AExample%20shape%3A%0A%7B%22APPLICATION_NAME%22%3A%22Yak%20Hair%20%26%20Flair%22%2C%22APPLICATION_THEME%22%3A%22bluegrey-lightgreen%22%2C%22APPLICATION_CSS_VARIABLES%22%3A%7B%22--theme-primary%22%3A%22%23123456%22%2C%22--theme-accent%22%3A%22%23ffcc00%22%2C%22--theme-warn%22%3A%22%23ff3e3e%22%2C%22--theme-background%22%3A%22%23101820%22%2C%22--theme-background-lighter%22%3A%22%231f2a34%22%2C%22--theme-background-dark%22%3A%22%2305080b%22%2C%22--theme-text%22%3A%22%23f8fafc%22%2C%22--theme-text-dark%22%3A%22%2394a3b8%22%2C%22--theme-thumbnail-border%22%3A%221px%20solid%20%23ffcc00%22%7D%2C%22PRODUCT_OVERRIDES%22%3A%7B%221%22%3A%7B%22name%22%3A%22Yak%20Shaving%20Starter%20Kit%22%2C%22description%22%3A%22Everything%20you%20need%20for%20artisanal%20yak%20maintenance%20and%20extremely%20specific%20career%20pivots.%22%2C%22image%22%3A%22yak-shaving-kit.png%22%2C%22price%22%3A4.99%2C%22deluxePrice%22%3A4.49%2C%22limitPerUser%22%3A3%2C%22reviews%22%3A%5B%7B%22text%22%3A%22My%20yak%20looks%20employable%20now.%20Five%20stars.%22%2C%22author%22%3A%22admin%22%7D%5D%7D%2C%22Orange%20Juice%20%281000ml%29%22%3A%7B%22name%22%3A%22Yak%20Hair%2C%20Bulk%20Pack%22%2C%22image%22%3A%22yak-hair.png%22%7D%7D%7D)
-- [Open in Claude](https://claude.ai/new?q=Generate%20fake%20retail-site%20branding%20and%20product%20override%20values%20for%20OWASP%20Juice%20Shop%20runtime%20branding.%0A%0AReturn%20only%20a%20single%20JSON%20object.%20Do%20not%20return%20a%20docker%20command%2C%20shell%20flags%2C%20markdown%2C%20code%20fences%2C%20explanations%2C%20or%20comments.%0A%0ARequired%20JSON%20keys%2C%20and%20no%20others%3A%0A-%20APPLICATION_NAME%0A-%20APPLICATION_THEME%0A-%20APPLICATION_CSS_VARIABLES%0A-%20PRODUCT_OVERRIDES%0A%0ARules%3A%0A-%20Do%20not%20include%20any%20other%20APPLICATION_%2A%20keys.%0A-%20APPLICATION_NAME%20should%20be%20a%20fun%20fake%20retail%20site%20name.%0A-%20APPLICATION_THEME%20must%20be%20exactly%20%22bluegrey-lightgreen%22.%0A-%20APPLICATION_CSS_VARIABLES%20must%20be%20a%20JSON%20object%2C%20not%20a%20string.%0A-%20CSS%20variable%20keys%20must%20start%20with%20--.%0A-%20PRODUCT_OVERRIDES%20must%20be%20a%20JSON%20object%2C%20not%20a%20string.%0A-%20PRODUCT_OVERRIDES%20keys%20must%20be%201-based%20product%20numbers%20as%20strings%2C%20such%20as%20%221%22%2C%20%222%22%2C%20or%20original%20product%20names%20such%20as%20%22Apple%20Juice%20%281000ml%29%22.%0A-%20PRODUCT_OVERRIDES%20values%20may%20include%20name%2C%20description%2C%20image%2C%20price%2C%20deluxePrice%2C%20limitPerUser%2C%20quantity%2C%20and%20reviews.%0A-%20reviews%20must%20be%20an%20array%20of%20objects%20with%20text%20and%20author%20string%20fields.%20Use%20existing%20authors%20such%20as%20admin%2C%20bender%2C%20or%20jim.%0A-%20Do%20not%20include%20challenge%20fields%20such%20as%20urlForProductTamperingChallenge%2C%20useForChristmasSpecialChallenge%2C%20keywordsForPastebinDataLeakChallenge%2C%20fileForRetrieveBlueprintChallenge%2C%20exifForBlueprintChallenge%2C%20or%20deletedDate.%0A-%20Use%20only%20straight%20ASCII%20quotes%20and%20hyphens.%0A%0AExample%20shape%3A%0A%7B%22APPLICATION_NAME%22%3A%22Yak%20Hair%20%26%20Flair%22%2C%22APPLICATION_THEME%22%3A%22bluegrey-lightgreen%22%2C%22APPLICATION_CSS_VARIABLES%22%3A%7B%22--theme-primary%22%3A%22%23123456%22%2C%22--theme-accent%22%3A%22%23ffcc00%22%2C%22--theme-warn%22%3A%22%23ff3e3e%22%2C%22--theme-background%22%3A%22%23101820%22%2C%22--theme-background-lighter%22%3A%22%231f2a34%22%2C%22--theme-background-dark%22%3A%22%2305080b%22%2C%22--theme-text%22%3A%22%23f8fafc%22%2C%22--theme-text-dark%22%3A%22%2394a3b8%22%2C%22--theme-thumbnail-border%22%3A%221px%20solid%20%23ffcc00%22%7D%2C%22PRODUCT_OVERRIDES%22%3A%7B%221%22%3A%7B%22name%22%3A%22Yak%20Shaving%20Starter%20Kit%22%2C%22description%22%3A%22Everything%20you%20need%20for%20artisanal%20yak%20maintenance%20and%20extremely%20specific%20career%20pivots.%22%2C%22image%22%3A%22yak-shaving-kit.png%22%2C%22price%22%3A4.99%2C%22deluxePrice%22%3A4.49%2C%22limitPerUser%22%3A3%2C%22reviews%22%3A%5B%7B%22text%22%3A%22My%20yak%20looks%20employable%20now.%20Five%20stars.%22%2C%22author%22%3A%22admin%22%7D%5D%7D%2C%22Orange%20Juice%20%281000ml%29%22%3A%7B%22name%22%3A%22Yak%20Hair%2C%20Bulk%20Pack%22%2C%22image%22%3A%22yak-hair.png%22%7D%7D%7D)
-
 Boolean variables such as `APPLICATION_SHOW_GITHUB_LINKS` and `APPLICATION_SHOW_SUPPORT_LINKS` are parsed as JSON, so
 use `true` or `false` without extra quotes. `APPLICATION_THEME` must be one of `deeppurple-amber`, `indigo-pink`,
 `pink-bluegrey`, `purple-green`, `blue-lightblue`, `bluegrey-lightgreen`, `deeporange-indigo`, `lime-green`, or
-`neon-fire`; the LLM helper prompts only generate `APPLICATION_NAME`, `APPLICATION_THEME`, `APPLICATION_CSS_VARIABLES`, and `PRODUCT_OVERRIDES`. `APPLICATION_TRANSLATION_OVERRIDES` and `APPLICATION_CSS_VARIABLES` must be valid JSON objects.
+`neon-fire`; runtime branding values should only include `APPLICATION_NAME`, `APPLICATION_THEME`, `APPLICATION_CSS_VARIABLES`, and `PRODUCT_OVERRIDES`. `APPLICATION_TRANSLATION_OVERRIDES` and `APPLICATION_CSS_VARIABLES` must be valid JSON objects.
 Translation overrides accept flat keys, a `*` or `default` block for all languages, and language specific blocks such
 as `en` or `de`. Wrap HTML, JSON, CSS, and other string values in single quotes when running them from a shell,
 especially if the value contains double quotes. CSS variable overrides are applied only for keys starting with `--`.
@@ -201,18 +185,7 @@ original product name.
 3. Run `cd vagrant && vagrant up`
 4. Browse to [192.168.56.110](http://192.168.56.110)
 
-## Demo
-
-Feel free to have a look at the latest version of OWASP Juice Shop:
-<http://demo.owasp-juice.shop>
-
-> This is a deployment-test and sneak-peek instance only! You are __not
-> supposed__ to use this instance for your own hacking endeavours! No
-> guaranteed uptime! Guaranteed stern looks if you break it!
-
-## Documentation
-
-### Node.js version compatibility
+## Node.js version compatibility
 
 ![GitHub package.json dynamic](https://img.shields.io/github/package-json/cpu/juice-shop/juice-shop)
 ![GitHub package.json dynamic](https://img.shields.io/github/package-json/os/juice-shop/juice-shop)
@@ -235,56 +208,18 @@ Juice Shop is automatically tested _only on the latest `.x` minor version_ of ea
 There is no guarantee that older minor node.js releases will always work with Juice Shop!
 Please make sure you stay up to date with your chosen version.
 
-### Troubleshooting
-
-[![Gitter](http://img.shields.io/badge/gitter-join%20chat-1dce73.svg)](https://gitter.im/bkimminich/juice-shop)
-
-If you need help with the application setup please check 
-[our existing _Troubleshooting_](https://pwning.owasp-juice.shop/companion-guide/latest/part4/troubleshooting.html)
-guide. If this does not solve your issue please post your specific problem or question in the
-[Gitter Chat](https://gitter.im/bkimminich/juice-shop) where community members can best try to help you.
-
-:stop_sign: **Please avoid opening GitHub issues for support requests or questions!**
-
-### Official companion guide
-
-[![Write Goodreads Review](https://img.shields.io/badge/goodreads-write%20review-49557240.svg)](https://www.goodreads.com/review/edit/49557240)
-
-OWASP Juice Shop comes with an official companion guide eBook. It will give you a complete overview of all
-vulnerabilities found in the application including hints how to spot and exploit them. In the appendix you will even
-find complete step-by-step solutions to every challenge. Extensive documentation of
-[custom re-branding](https://pwning.owasp-juice.shop/companion-guide/latest/part4/customization.html),
-[CTF-support](https://pwning.owasp-juice.shop/companion-guide/latest/part4/ctf.html),
-[trainer's guide](https://pwning.owasp-juice.shop/companion-guide/latest/part4/trainers.html)
-and much more is also included.
-
-[Pwning OWASP Juice Shop](https://leanpub.com/juice-shop) is published under
-[CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/)
-and is available **for free** in PDF, Kindle and ePub format on LeanPub. You can also
-[browse the full content online](https://pwning.owasp-juice.shop)!
-
-[<img alt="Pwning OWASP Juice Shop cover" src="https://raw.githubusercontent.com/juice-shop/pwning-juice-shop/master/docs/modules/ROOT/assets/images/cover.jpg" width="200"/>](https://leanpub.com/juice-shop)
-[<img alt="Pwning OWASP Juice Shop back cover" src="https://raw.githubusercontent.com/juice-shop/pwning-juice-shop/master/docs/modules/ROOT/assets/images/introduction/back.jpg" width="200"/>](https://leanpub.com/juice-shop)
-
 ## Contributing
 
-[![GitHub contributors](https://img.shields.io/github/contributors/juice-shop/juice-shop.svg)](https://github.com/juice-shop/juice-shop/graphs/contributors)
 [![JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
-[![Crowdin](https://d322cqt584bo4o.cloudfront.net/owasp-juice-shop/localized.svg)](https://crowdin.com/project/owasp-juice-shop)
-![GitHub issues by-label](https://img.shields.io/github/issues/juice-shop/juice-shop/help%20wanted.svg)
-![GitHub issues by-label](https://img.shields.io/github/issues/juice-shop/juice-shop/good%20first%20issue.svg)
 
-We are always happy to get new contributors on board! Please check
-[CONTRIBUTING.md](CONTRIBUTING.md) to learn how to
-[contribute to our codebase](CONTRIBUTING.md#code-contributions) or the
-[translation into different languages](CONTRIBUTING.md#i18n-contributions)!
+Keep changes focused and review generated output before publishing it.
 
 ## References
 
 Did you write a blog post, magazine article or do a podcast about or mentioning OWASP Juice Shop? Or maybe you held or
 joined a conference talk or meetup session, a hacking workshop or public training where this project was mentioned?
 
-Add it to our ever-growing list of [REFERENCES.md](REFERENCES.md) by forking and opening a Pull Request!
+Keep public mentions in a local reference list when needed.
 
 ## Merchandise
 
@@ -298,14 +233,7 @@ Add it to our ever-growing list of [REFERENCES.md](REFERENCES.md) by forking and
 
 ## Donations
 
-[![](https://img.shields.io/badge/support-owasp%20juice%20shop-blue)](https://owasp.org/donate/?reponame=www-project-juice-shop&title=OWASP+Juice+Shop)
-
-The OWASP Foundation gratefully accepts donations via Stripe. Projects such as Juice Shop can then request reimbursement
-for expenses from the Foundation. If you'd like to express your support of the Juice Shop project, please make sure to
-tick the "Publicly list me as a supporter of OWASP Juice Shop" checkbox on the donation form. You can find our more
-about donations and how they are used here:
-
-<https://pwning.owasp-juice.shop/companion-guide/latest/part3/donations.html>
+Premium goodwill is appreciated. Convert enthusiasm into cart activity.
 
 ## Contributors
 

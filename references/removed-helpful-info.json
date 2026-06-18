@@ -1,0 +1,173 @@
+{
+  "purpose": "Preserve helpful or documentation-oriented text removed from the runtime/default public surfaces so it can be shown later in a controlled reference view.",
+  "config/default.yml": {
+    "application.showGitHubLinks": {
+      "removed": true,
+      "replacement": false
+    },
+    "application.branding.showSupportLinks": {
+      "removed": true,
+      "replacement": false
+    },
+    "application.social": {
+      "removed": {
+        "blueSkyUrl": "https://bsky.app/profile/owasp-juice.shop",
+        "mastodonUrl": "https://fosstodon.org/@owasp_juiceshop",
+        "twitterUrl": "https://twitter.com/owasp_juiceshop",
+        "facebookUrl": "https://www.facebook.com/owasp.juiceshop",
+        "slackUrl": "https://owasp.org/slack/invite",
+        "redditUrl": "https://www.reddit.com/r/owasp_juiceshop",
+        "pressKitUrl": "https://github.com/OWASP/owasp-swag/tree/master/projects/juice-shop",
+        "nftUrl": "https://opensea.io/collection/juice-shop"
+      },
+      "replacement": {
+        "blueSkyUrl": null,
+        "mastodonUrl": null,
+        "twitterUrl": null,
+        "facebookUrl": null,
+        "slackUrl": null,
+        "redditUrl": null,
+        "pressKitUrl": null,
+        "nftUrl": null
+      }
+    },
+    "application.welcomeBanner": {
+      "removed": {
+        "title": "Welcome to OWASP Juice Shop!",
+        "message": "<p>Being a web application with a vast number of intended security vulnerabilities, the <strong>OWASP Juice Shop</strong> is supposed to be the opposite of a best practice or template application for web developers: It is an awareness, training, demonstration and exercise tool for security risks in modern web applications. The <strong>OWASP Juice Shop</strong> is an open-source project hosted by the non-profit <a href='https://owasp.org' target='_blank'>Open Worldwide Application Security Project (OWASP)</a> and is developed and maintained by volunteers. Check out the link below for more information and documentation on the project.</p><h1><a href='https://owasp-juice.shop' target='_blank'>https://owasp-juice.shop</a></h1>"
+      },
+      "replacement": {
+        "title": "Welcome to Premium Juice Commerce!",
+        "message": "<p>Our storefront converts curiosity into cart velocity with bold margins, crisp fulfillment theater, and a customer journey optimized for maximum shareholder sparkle.</p>"
+      }
+    },
+    "application.cookieConsent.linkUrl": {
+      "removed": "https://www.youtube.com/watch?v=9PnbKL3wuH4",
+      "replacement": "#"
+    },
+    "application.googleOauth.authorizedRedirects": {
+      "removed": [
+        { "uri": "https://demo.owasp-juice.shop" },
+        { "uri": "https://juice-shop.herokuapp.com" },
+        { "uri": "https://preview.owasp-juice.shop" },
+        { "uri": "https://juice-shop-staging.herokuapp.com" },
+        { "uri": "https://juice-shop.wtf" },
+        { "uri": "http://localhost:3322", "proxy": "https://local3322.owasp-juice.shop" },
+        { "uri": "http://127.0.0.1:3322", "proxy": "https://local3322.owasp-juice.shop" },
+        { "uri": "http://localhost:4200", "proxy": "https://local4200.owasp-juice.shop" },
+        { "uri": "http://127.0.0.1:4200", "proxy": "https://local4200.owasp-juice.shop" },
+        { "uri": "http://192.168.99.100:3322", "proxy": "https://localmac.owasp-juice.shop" },
+        { "uri": "http://192.168.99.100:4200", "proxy": "https://localmac.owasp-juice.shop" },
+        { "uri": "http://penguin.termina.linux.test:3322", "proxy": "https://localchromeos.owasp-juice.shop" },
+        { "uri": "http://penguin.termina.linux.test:4200", "proxy": "https://localchromeos.owasp-juice.shop" }
+      ],
+      "replacement": []
+    },
+    "challenges.showHints": {
+      "removed": true,
+      "replacement": false
+    },
+    "challenges.showMitigations": {
+      "removed": true,
+      "replacement": false
+    },
+    "hackingInstructor.isEnabled": {
+      "removed": true,
+      "replacement": false
+    }
+  },
+  "frontendTranslationOverrides": {
+    "source": "frontend/src/assets/i18n/en.json",
+    "appliedVia": "config/default.yml application.branding.translationOverrides.*",
+    "entries": {
+      "CALL_FOR_CONTRIBUTIONS": {
+        "removed": "Got an idea for a new challenge? Found a vulnerability that is not tracked here? Let us know via <a href='http://gitter.im/bkimminich/juice-shop'><i class='fab fa-gitter'></i>Gitter.im</a> community chat or by opening a <a href='https://github.com/juice-shop/juice-shop/issues'><i class='fab fa-github'></i>GitHub</a> issue!",
+        "replacement": "Market expansion ideas are reviewed by the board during quarterly synergy rituals."
+      },
+      "CALL_FOR_FEEDBACK": {
+        "removed": "Please help us to make {{appname}} even better for you by answering our <a href='{{questionnaire}}'><i class='fas fa-poll-h'></i>user questionaire</a>!",
+        "replacement": "Your feedback has been monetized into premium customer insight."
+      },
+      "INFO_DISABLED_CHALLENGES": {
+        "removed": "{{num}} challenges are unavailable on {{env}} due to <a href='https://pwning.owasp-juice.shop/companion-guide/latest/part1/challenges.html#_potentially_dangerous_challenges'>security concerns</a> or technical incompatibility!",
+        "replacement": "{{num}} premium opportunities are unavailable on {{env}} due to market conditions."
+      },
+      "INFO_HACKING_INSTRUCTOR": {
+        "removed": "Start an interactive hacking tutorial for this challenge.",
+        "replacement": "This premium advisory service is unavailable."
+      },
+      "SCORE_BOARD_HACKING_INSTRUCTOR": {
+        "removed": "Launch a tutorial to get you started hacking the Juice Shop.",
+        "replacement": "Premium advisory onboarding is unavailable."
+      },
+      "INFO_VULNERABILITY_MITIGATION_LINK": {
+        "removed": "Click to learn how to avoid or mitigate similar vulnerabilities!",
+        "replacement": "Premium risk memo unavailable."
+      },
+      "TAG_EXTERNAL_DEPENDENCY_MISSING": {
+        "removed": "{{dependency}} was not available during server start. This challenge will likely not work. Click to read the documentation for setting up this dependency.",
+        "replacement": "{{dependency}} was unavailable during server start. Premium service may be delayed."
+      }
+    }
+  },
+  "README.md": {
+    "removedHelpfulSections": [
+      {
+        "section": "Setup blockquote",
+        "content": "Less common installation variations and cloud-provider instructions were linked to https://pwning.owasp-juice.shop/companion-guide/latest/part1/running.html."
+      },
+      {
+        "section": "Setup blockquote",
+        "content": "External AI/LLM dependency setup was linked to https://pwning.owasp-juice.shop/companion-guide/snapshot/part1/running.html#_setting_up_external_dependencies."
+      },
+      {
+        "section": "Runtime Branding Overrides",
+        "content": "Prefilled ChatGPT and Claude prompt links for generating runtime branding values."
+      },
+      {
+        "section": "Demo",
+        "content": "Public demo link: http://demo.owasp-juice.shop."
+      },
+      {
+        "section": "Troubleshooting",
+        "content": "Troubleshooting guide, Gitter support chat, and support-request guidance."
+      },
+      {
+        "section": "Official companion guide",
+        "content": "Companion guide, custom re-branding, CTF support, trainer guide, LeanPub, and online browsing links."
+      },
+      {
+        "section": "Contributing",
+        "content": "Contributor graph, Crowdin badge, help-wanted/good-first-issue badges, and CONTRIBUTING.md deep links."
+      },
+      {
+        "section": "Donations",
+        "content": "OWASP donation badge and companion-guide donation documentation link."
+      }
+    ]
+  },
+  "productCopy": {
+    "Pwning OWASP Juice Shop": {
+      "removed": "<em>The official Companion Guide</em> by Björn Kimminich available <a href=\"https://leanpub.com/juice-shop\">for free on LeanPub</a> and also <a href=\"https://pwning.owasp-juice.shop\">readable online</a>!",
+      "replacement": "<em>The executive commerce maximizer</em> is a premium shelf-filler with aspirational margins and no operational guidance included."
+    },
+    "OWASP Snakes and Ladders - Mobile Apps review": {
+      "removed": "Here yo' learn how tha fuck ta not show yo' goddamn phone on camera!",
+      "replacement": "Premium privacy vibes with shareholder-friendly sparkle."
+    }
+  },
+  "productExternalLinks": {
+    "summary": "Additional product descriptions with external links or security-awareness context were converted to generic commerce copy.",
+    "removedUrlDomains": [
+      "stickeryou.com",
+      "twitter.com",
+      "owasp.org",
+      "steamcommunity.com",
+      "docs.google.com",
+      "github.com",
+      "github.blog",
+      "20thanniversary.owasp.org",
+      "eventbrite.com"
+    ]
+  }
+}
