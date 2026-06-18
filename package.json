@@ -49,33 +49,34 @@
     "..."
   ],
   "scripts": {
-    "build": "npm run build:frontend && npm run build:server",
-    "build:frontend": "cd frontend && npm run build",
+    "build": "pnpm run build:frontend && pnpm run build:server",
+    "build:frontend": "cd frontend && pnpm run build",
     "build:server": "tsc",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
-    "postinstall": "cd frontend && npm install && cd .. && npm run build:frontend && (npm run --silent build:server || cd .)",
-    "lint": "eslint *.ts data lib models routes test/**/*.ts views && cd frontend && npm run lint && npm run lint:scss && cd ..",
+    "postinstall": "cd frontend && pnpm install && cd .. && pnpm run build:frontend && (pnpm run --silent build:server || cd .)",
+    "lint": "eslint *.ts data lib models routes test/**/*.ts views && cd frontend && pnpm run lint && pnpm run lint:scss && cd ..",
     "lint:config": "schema validate -s config.schema.yml",
-    "lint:fix": "eslint *.ts data lib models routes test/**/*.ts views rsn --fix && cd frontend && npm run lint:fix && cd ..",
+    "lint:fix": "eslint *.ts data lib models routes test/**/*.ts views rsn --fix && cd frontend && pnpm run lint:fix && cd ..",
     "package": "grunt package",
-    "package:ci": "npm prune --production && npm dedupe && cd frontend && npm prune --production && cd .. && npm run --silent sbom && grunt package",
-    "serve": "concurrently --kill-others \"tsx app.ts\" \"cd frontend && npm run start\"",
-    "serve:dev": "concurrently --kill-others \"tsx watch app.ts\" \"cd frontend && npm run start\"",
+    "package:ci": "pnpm prune --prod && pnpm dedupe && cd frontend && pnpm prune --prod && cd .. && pnpm run --silent sbom && grunt package",
+    "serve": "concurrently --kill-others \"tsx app.ts\" \"cd frontend && pnpm run start\"",
+    "serve:dev": "concurrently --kill-others \"tsx watch app.ts\" \"cd frontend && pnpm run start\"",
     "start": "node build/app",
-    "test": "npm run test:frontend && npm run test:server && npm run test:api",
-    "test:coverage": "npm run test:frontend:coverage && npm run test:server:coverage && npm run test:api:coverage",
-    "test:frontend": "cd frontend && npm run test",
-    "test:frontend:coverage": "cd frontend && npm run test:coverage",
+    "test": "pnpm run test:frontend && pnpm run test:server && pnpm run test:api",
+    "test:coverage": "pnpm run test:frontend:coverage && pnpm run test:server:coverage && pnpm run test:api:coverage",
+    "test:frontend": "cd frontend && pnpm run test",
+    "test:frontend:coverage": "cd frontend && pnpm run test:coverage",
     "test:server": "mocha -r tsx --recursive test/server/**/*.ts",
-    "test:server:coverage": "nyc --report-dir=./coverage/server-tests npm run test:server",
+    "test:server:coverage": "nyc --report-dir=./coverage/server-tests pnpm run test:server",
     "test:api": "node --import ./test/api/helpers/test-env.mjs --import tsx --test --test-force-exit \"test/api/**/*.test.ts\"",
-    "test:api:coverage": "nyc --report-dir=./coverage/api-tests npm run test:api",
-    "test:e2e": "npm run cypress:run",
+    "test:api:coverage": "nyc --report-dir=./coverage/api-tests pnpm run test:api",
+    "test:e2e": "pnpm run cypress:run",
     "rsn": "tsx rsn/rsn.ts",
     "rsn:update": "tsx rsn/rsn-update.ts",
     "vagrant": "cd vagrant && vagrant up",
-    "sbom": "cyclonedx-npm --omit=dev --output-format=JSON --output-file=bom.json"
+    "sbom": "cyclonedx-npm --omit=dev --output-format=JSON --output-file=bom.json",
+    "preinstall": "node -e \"const ua=process.env.npm_config_user_agent||''; if (!ua.includes('pnpm/')) { console.error('Use pnpm via Corepack: corepack enable && corepack prepare pnpm@11.1.1 --activate'); process.exit(1) }\""
   },
   "nyc": {
     "extends": "@istanbuljs/nyc-config-typescript",
@@ -240,5 +241,6 @@
     "arm64",
     "arm"
   ],
-  "heroku-run-build-script": true
+  "heroku-run-build-script": true,
+  "packageManager": "pnpm@11.1.1"
 }

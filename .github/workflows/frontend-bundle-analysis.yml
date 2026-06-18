@@ -23,25 +23,25 @@ jobs:
 
       - name: "Install backend dependencies"
         run: |
-          npm install --ignore-scripts
+          corepack enable && pnpm install --ignore-scripts
 
       - name: "Install frontend dependencies and build"
         run: |
           cd frontend
-          npm install --ignore-scripts
-          npm run build
+          corepack enable && pnpm install --ignore-scripts
+          pnpm run build
 
       - name: "Generate bundle report"
         run: |
           cd frontend
-          npm run bundle-visualizer
+          pnpm run bundle-visualizer
 
       - name: "Install Playwright for screenshot"
-        run: npm install playwright
+        run: corepack enable && pnpm add -D playwright
 
       - name: "Take screenshot of bundle report"
         run: |
-          npx playwright install chromium
+          pnpm exec playwright install chromium
           node -e "
             const { chromium } = require('playwright');
             (async () => {

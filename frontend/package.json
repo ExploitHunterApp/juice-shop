@@ -4,17 +4,18 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --configuration production && npm run sbom",
+    "build": "ng build --configuration production && pnpm run sbom",
     "sbom": "cyclonedx-esbuild --output-reproducible --output-file dist/bom/bom.json dist/frontend/stats.json",
-    "bundle-visualizer": "node --experimental-strip-types filter-bundle-stats-for-diagram.mts && npx esbuild-visualizer --metadata dist/frontend/stats-filtered.json --filename dist/frontend/bundle-report.html",
-    "bundle-visualizer:full": "npx esbuild-visualizer --metadata dist/frontend/stats.json --filename dist/frontend/bundle-report.html",
+    "bundle-visualizer": "node --experimental-strip-types filter-bundle-stats-for-diagram.mts && pnpm exec esbuild-visualizer --metadata dist/frontend/stats-filtered.json --filename dist/frontend/bundle-report.html",
+    "bundle-visualizer:full": "pnpm exec esbuild-visualizer --metadata dist/frontend/stats.json --filename dist/frontend/bundle-report.html",
     "test": "ng test",
     "test:coverage": "ng test --configuration=coverage --watch=false",
     "test:watch": "ng test --watch --reporters=default",
     "test:verbose": "ng test --reporters=verbose",
     "lint": "ng lint",
-    "lint:scss": "npx stylelint \"**/*.scss\"",
-    "lint:fix": "ng lint --fix && npx stylelint \"**/*.scss\" --fix"
+    "lint:scss": "pnpm exec stylelint \"**/*.scss\"",
+    "lint:fix": "ng lint --fix && pnpm exec stylelint \"**/*.scss\" --fix",
+    "preinstall": "node -e \"const ua=process.env.npm_config_user_agent||''; if (!ua.includes('pnpm/')) { console.error('Use pnpm via Corepack: corepack enable && corepack prepare pnpm@11.1.1 --activate'); process.exit(1) }\""
   },
   "private": true,
   "dependencies": {
@@ -31,10 +32,15 @@
     "@angular/platform-browser": "^21.2.1",
     "@angular/platform-browser-dynamic": "^21.2.1",
     "@angular/router": "^21.2.1",
+    "@codemirror/commands": "^6.10.3",
     "@codemirror/lang-javascript": "^6.2.5",
     "@codemirror/lang-json": "^6.0.2",
     "@codemirror/lang-yaml": "^6.1.2",
+    "@codemirror/language": "^6.12.3",
     "@codemirror/merge": "^6.12.0",
+    "@codemirror/search": "^6.7.1",
+    "@codemirror/state": "^6.6.0",
+    "@codemirror/view": "^6.43.1",
     "@cyclonedx/cyclonedx-esbuild": "^1.0.0",
     "@fortawesome/fontawesome-svg-core": "~1.2.30",
     "@fortawesome/free-brands-svg-icons": "^5.14.0",
@@ -43,6 +49,7 @@
     "@ngx-translate/core": "^17.0.0",
     "@ngx-translate/http-loader": "^17.0.0",
     "@wagmi/core": "^0.5.8",
+    "@lezer/highlight": "^1.2.3",
     "canvas-confetti": "^1.9.3",
     "codemirror": "^6.0.2",
     "cookieconsent": "^3.1.1",
@@ -86,5 +93,6 @@
   },
   "overrides": {
     "lru-cache@^11": "~11.2.7"
-  }
+  },
+  "packageManager": "pnpm@11.1.1"
 }

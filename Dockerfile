@@ -5,10 +5,11 @@ ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME/bin:$PATH"
 RUN corepack enable && corepack prepare pnpm@11.1.1 --activate
 RUN pnpm add -g typescript@~5.3.3
-RUN pnpm install --prod --ignore-scripts --no-frozen-lockfile
-RUN cd frontend && pnpm install --no-frozen-lockfile && pnpm run build
+RUN pnpm install --ignore-scripts --frozen-lockfile
+RUN pnpm run build:frontend
 RUN pnpm run --silent build:server || true
-RUN pnpm dedupe --prod
+RUN pnpm prune --prod
+RUN cd frontend && pnpm prune --prod
 RUN rm -rf frontend/node_modules
 RUN rm -rf frontend/.angular
 RUN rm -rf frontend/src/assets
@@ -21,8 +22,8 @@ RUN rm i18n/*.json || true
 
 # keep version in sync with package.json
 ARG CYCLONEDX_NPM_VERSION='^2.0.0||^3.0.0||^4.0.0'
-RUN npm install -g @cyclonedx/cyclonedx-npm@$CYCLONEDX_NPM_VERSION
-RUN npm run sbom
+RUN pnpm add -g @cyclonedx/cyclonedx-npm@$CYCLONEDX_NPM_VERSION
+RUN pnpm run sbom
 
 FROM gcr.io/distroless/nodejs24-debian13
 ARG BUILD_DATE

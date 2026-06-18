@@ -79,9 +79,10 @@ This fork is tuned as a configurable ecommerce target for automated agents.
    clone [your own fork](https://github.com/juice-shop/juice-shop/fork)
    of the repository)
 3. Go into the cloned folder with `cd juice-shop`
-4. Run `npm install` (only has to be done before first start or when you change the source code)
-5. Run `npm start`
-6. Browse to <http://localhost:3000>
+4. Run `corepack enable && corepack prepare pnpm@11.1.1 --activate`
+5. Run `pnpm install` (only has to be done before first start or when you change the source code)
+6. Run `pnpm start`
+7. Browse to <http://localhost:3000>
 
 ### Packaged Distributions
 
@@ -94,11 +95,11 @@ This fork is tuned as a configurable ecommerce target for automated agents.
    `.tgz`) attached to
    [latest release](https://github.com/juice-shop/juice-shop/releases/latest)
 3. Unpack and `cd` into the unpacked folder
-4. Run `npm start`
+4. Run `pnpm start`
 5. Browse to <http://localhost:3000>
 
 > Each packaged distribution includes some binaries for `sqlite3` and
-> `libxmljs2` bound to the OS and node.js version which `npm install` was
+> `libxmljs2` bound to the OS and node.js version which `pnpm install` was
 > executed on.
 
 ### Docker Container
@@ -135,7 +136,7 @@ APPLICATION_COOKIE_MESSAGE='We use cookies to keep the yaks glossy and the check
 APPLICATION_TRANSLATION_OVERRIDES='{"*":{"NAV_COMPLAIN":"Lodge a Yak Gripe","LINK_TERMS_OF_USE":"Read our majestically dull grooming bylaws if your attention span brought snacks.","TITLE_ADMINISTRATION":"Shed Command Center","LABEL_USER":"Wrangler","TITLE_ALL_PRODUCTS":"All Shed Supplies","BASKET_ADD_SAME_PRODUCT":"Tucked another {{product}} into the satchel.","BASKET_ADD_PRODUCT":"Stashed {{product}} in the satchel.","LABEL_PRODUCT":"Supply","LABEL_PRODUCT_ORDERED":"Claimed supplies","TITLE_BASKET":"Shaving Satchel","TITLE_LOGIN":"Enter the Shed","THANKS_FOR_SUPPORT":"Thanks for keeping {{juiceshop}} delightfully unshorn!","THANKS_FOR_SUPPORT_CUSTOMIZED":"Thanks for backing the open source shed behind {{appname}}!","OFFICIAL_MERCHANDISE_STORES":"Official stalls for {{juiceshop}} apparel, mugs, and stickers!","OFFICIAL_MERCHANDISE_STORES_CUSTOMIZED":"Official stalls for apparel, mugs, and stickers from the open source shed behind {{appname}}!"},"de":{"TITLE_BASKET":"Rasierbeutel"}}' \
 APPLICATION_CSS_VARIABLES='{"--theme-primary":"#123456","--theme-accent":"#ffcc00","--theme-warn":"#ff3e3e","--theme-background":"#101820","--theme-background-lighter":"#1f2a34","--theme-background-dark":"#05080b","--theme-text":"#f8fafc","--theme-text-dark":"#94a3b8","--theme-thumbnail-border":"1px solid #ffcc00"}' \
 PRODUCT_OVERRIDES='{"1":{"name":"Yak Shaving Starter Kit","description":"Everything you need for artisanal yak maintenance and extremely specific career pivots.","image":"yak-shaving-kit.png","price":4.99,"deluxePrice":4.49,"limitPerUser":3,"reviews":[{"text":"My yak looks employable now. Five stars.","author":"admin"}]},"Orange Juice (1000ml)":{"name":"Yak Hair, Bulk Pack","image":"yak-hair.png"}}' \
-npm start
+pnpm start
 ```
 
 For Docker, pass the same variables with `-e`:
@@ -153,7 +154,7 @@ docker run --rm -p 127.0.0.1:3323:3000 \
 ```
 
 To run several Docker containers in parallel, keep the container-side port fixed and change only the host-side port,
-for example `-p 127.0.0.1:3324:3000`. For source or packaged installs, use `PORT=3324 npm start`.
+for example `-p 127.0.0.1:3324:3000`. For source or packaged installs, use `PORT=3324 pnpm start`.
 
 Boolean variables such as `APPLICATION_SHOW_GITHUB_LINKS` and `APPLICATION_SHOW_SUPPORT_LINKS` are parsed as JSON, so
 use `true` or `false` without extra quotes. `APPLICATION_THEME` must be one of `deeppurple-amber`, `indigo-pink`,

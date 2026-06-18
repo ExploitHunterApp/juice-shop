@@ -1,6 +1,6 @@
 tasks:
-  - init: npm install
-    command: npm start
+  - init: corepack enable && corepack prepare pnpm@11.1.1 --activate && pnpm install
+    command: pnpm start
 
 ports:
   - name: OWASP Juice Shop

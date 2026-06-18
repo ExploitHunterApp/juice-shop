@@ -51,7 +51,7 @@ Issues that don't have enough info and can't be reproduced will be labeled with 
 ## :deciduous_tree: Your Environment
 
 <pre><code>
-<!-- run `node -v && npm -v` and paste output below -->
+<!-- run `node -v && pnpm -v` and paste output below -->
 <!-- ✍️-->
 
 </code></pre>

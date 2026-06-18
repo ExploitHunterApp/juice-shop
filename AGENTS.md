@@ -77,7 +77,7 @@ This document is the **primary authoritative source** of context for all AI assi
 
 Always run ESLint before committing (unless only `REFERENCES.md` or `SOLUTIONS.md` were modified):
 ```bash
-npm run lint
+pnpm run lint
 ```
 The AI should suggest code following [JS Standard Style](http://standardjs.com/), but always verify.
 
@@ -89,12 +89,12 @@ For any code changes (unless only `REFERENCES.md` or `SOLUTIONS.md` were modifie
 - **RSN (Refactoring Safety Net)**: Required when modifying existing code that is part of a coding challenge (see the [verify-rsn-fix skill](./.ai/skills/verify-rsn-fix/SKILL.md) for details).
 - **Run Tests Locally**:
   ```bash
-  npm test                    # Runs frontend, server, and api tests
-  npm run test:frontend       # Frontend unit tests (Vitest)
-  npm run test:server         # Server unit tests only (Mocha/Chai/Sinon)
-  npm run test:api            # API integration tests (Supertest)
-  npm start & npm run test:e2e  # E2E tests (Cypress)
-  npm run rsn                 # Refactoring Safety Net
+  pnpm test                       # Runs frontend, server, and api tests
+  pnpm run test:frontend          # Frontend unit tests (Vitest)
+  pnpm run test:server            # Server unit tests only (Mocha/Chai/Sinon)
+  pnpm run test:api               # API integration tests (Supertest)
+  pnpm start & pnpm run test:e2e  # E2E tests (Cypress)
+  pnpm run rsn                    # Refactoring Safety Net
   ```
 
 ### 4. Commit Sign-off
@@ -127,9 +127,9 @@ Ask the AI to:
 ### 3. Quality Assurance
 Before committing:
 1. Remove AI-generated noise.
-2. Run `npm run lint` (unless only `REFERENCES.md` or `SOLUTIONS.md` were modified).
+2. Run `pnpm run lint` (unless only `REFERENCES.md` or `SOLUTIONS.md` were modified).
 3. Run relevant test suites.
-4. If you modified code that is part of a coding challenge, run `npm run rsn`.
+4. If you modified code that is part of a coding challenge, run `pnpm run rsn`.
 5. Manually verify functionality.
 6. Check for unintended changes.
 
@@ -162,7 +162,7 @@ Ask the AI to:
 2. **Locate**: Locate the problematic code.
 3. **Implement**: Implement the fix with the AI's help.
 4. **Test**: Generate tests and run the suite.
-5. **RSN**: Run `npm run rsn` if the fix affects code used in a coding challenge.
+5. **RSN**: Run `pnpm run rsn` if the fix affects code used in a coding challenge.
 6. **Sign-off**: Clean up and commit with sign-off (`git commit -s`).
 
 ## Quality Checklist
@@ -184,11 +184,11 @@ Before submitting a PR:
 When modifying existing code that is part of a coding challenge, you must run the RSN to ensure code snippet and fix option files remain consistent:
 
 ```bash
-npm run rsn
+pnpm run rsn
 ```
 
 - **If RSN fails**: Review the listed differences.
-- If changes are intentionally part of the coding challenge, update the differences cache: `npm run rsn:update`.
+- If changes are intentionally part of the coding challenge, update the differences cache: `pnpm run rsn:update`.
 - **IMPORTANT**: Utilize the [verify-rsn-fix skill](./.ai/skills/verify-rsn-fix/SKILL.md).
 - When refactoring source code that is part of a challenge snippet, manually apply the same changes to the corresponding codefix files in `data/static/codefixes/` to maintain consistency.
 

@@ -14,11 +14,11 @@ jobs:
         node-version: 22
     - name: "Install application"
       run: |
-        npm install --ignore-scripts
+        corepack enable && pnpm install --ignore-scripts
         cd frontend
-        npm install --ignore-scripts --legacy-peer-deps
+        corepack enable && pnpm install --ignore-scripts
     - name: "Fix everything which can be fixed"
-      run: 'npm run lint:fix'
+      run: 'pnpm run lint:fix'
     - uses: stefanzweifel/git-auto-commit-action@8621497c8c39c72f3e2a999a26b4ca1b5058a842 #v5.0.1
       with:
         commit_message: "Auto-fix linting issues"
