@@ -3,11 +3,11 @@ WORKDIR /juice-shop
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME/bin:$PATH"
 RUN corepack enable && corepack prepare pnpm@11.1.1 --activate
-RUN pnpm add -g typescript@~5.3.3
+RUN pnpm add -g typescript@^6.0.3
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY frontend/package.json frontend/package.json
 RUN pnpm install --ignore-scripts --frozen-lockfile
-RUN pnpm rebuild sqlite3 libxmljs2
+RUN pnpm rebuild sqlite3
 COPY . /juice-shop
 RUN pnpm run build:frontend
 RUN pnpm run --silent build:server || true
@@ -23,6 +23,9 @@ RUN chmod -R g=u ftp/ frontend/dist/ logs/ data/ i18n/
 RUN rm ftp/legal.md || true
 RUN rm i18n/*.json || true
 
+# keep version in sync with package.json
+ARG CYCLONEDX_NPM_VERSION='^2.0.0||^3.0.0||^4.0.0'
+RUN pnpm add -g @cyclonedx/cyclonedx-npm@$CYCLONEDX_NPM_VERSION
 RUN pnpm run sbom
 
 FROM gcr.io/distroless/nodejs24-debian13
@@ -35,7 +38,7 @@ LABEL maintainer="ExploitHunter.app" \
     org.opencontainers.image.vendor="ExploitHunter.app" \
     org.opencontainers.image.documentation="https://yak-shaving.example/help" \
     org.opencontainers.image.licenses="MIT" \
-    org.opencontainers.image.version="20.0.0" \
+    org.opencontainers.image.version="20.1.1" \
     org.opencontainers.image.url="https://yak-shaving.example" \
     org.opencontainers.image.source="https://github.com/justsml/juice-shop" \
     org.opencontainers.image.revision=$VCS_REF \

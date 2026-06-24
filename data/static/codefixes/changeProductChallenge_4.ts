@@ -17,6 +17,7 @@
   app.put('/api/Products/:id', security.isAuthorized())
   app.delete('/api/Products/:id', security.denyAll())
   /* Challenges: GET list of challenges allowed. Everything else forbidden entirely */
+  app.get('/api/Challenges/progress', utils.asyncHandler(challengeProgress()))
   app.post('/api/Challenges', security.denyAll())
   app.use('/api/Challenges/:id', security.denyAll())
   /* Hints: GET and PUT hints allowed. Everything else forbidden */
@@ -45,6 +46,7 @@
   app.use('/rest/user/authentication-details', security.isAuthorized())
   app.use('/rest/basket/:id', security.isAuthorized())
   app.use('/rest/basket/:id/order', security.isAuthorized())
+  app.post('/api/Users', verify.emptyUserRegistration())
   /* Unauthorized users are not allowed to access B2B API */
   app.use('/b2b/v2', security.isAuthorized())
   /* Check if the quantity is available in stock and limit per user not exceeded, then add item to basket */

@@ -352,6 +352,7 @@ function configureApp (app: ReturnType<typeof express>, seq: typeof sequelize) {
   /** Authorization **/
   /* Checks on JWT in Authorization header */ // vuln-code-snippet hide-line
   app.use(verify.jwtChallenges()) // vuln-code-snippet hide-line
+  app.use(security.updateAuthenticatedUsers()) // vuln-code-snippet hide-line
   /* Baskets: Unauthorized users are not allowed to access baskets */
   app.use('/rest/basket', security.isAuthorized(), security.appendUserId())
   /* BasketItems: API only accessible for authenticated users */
@@ -598,7 +599,7 @@ function configureApp (app: ReturnType<typeof express>, seq: typeof sequelize) {
   app.get('/rest/user/change-password', utils.asyncHandler(changePassword()))
   app.post('/rest/user/reset-password', utils.asyncHandler(resetPassword()))
   app.get('/rest/user/security-question', utils.asyncHandler(securityQuestion()))
-  app.get('/rest/user/whoami', security.updateAuthenticatedUsers(), utils.asyncHandler(retrieveLoggedInUser()))
+  app.get('/rest/user/whoami', utils.asyncHandler(retrieveLoggedInUser()))
   app.get('/rest/user/authentication-details', utils.asyncHandler(authenticatedUsers()))
   app.get('/rest/products/search', utils.asyncHandler(searchProducts()))
   app.get('/rest/basket/:id', utils.asyncHandler(retrieveBasket()))
@@ -664,7 +665,7 @@ function configureApp (app: ReturnType<typeof express>, seq: typeof sequelize) {
   app.get('/video', getVideo())
 
   /* Routes for profile page */
-  app.get('/profile', security.updateAuthenticatedUsers(), utils.asyncHandler(getUserProfile()))
+  app.get('/profile', utils.asyncHandler(getUserProfile()))
   app.post('/profile', utils.asyncHandler(updateUserProfile()))
 
   /* Route for vulnerable code snippets */
@@ -672,6 +673,9 @@ function configureApp (app: ReturnType<typeof express>, seq: typeof sequelize) {
   app.post('/snippets/verdict', utils.asyncHandler(checkVulnLines()))
   app.get('/snippets/fixes/:key', utils.asyncHandler(serveCodeFixes()))
   app.post('/snippets/fixes', utils.asyncHandler(checkCorrectFix()))
+
+  /* Serve metrics before the Angular catch-all so the route is reachable in all environments */
+  app.get('/metrics', utils.asyncHandler(metrics.serveMetrics()))
 
   app.use(utils.asyncHandler(serveAngularClient()))
 

@@ -11,6 +11,8 @@ import config from 'config'
 import path from 'node:path'
 import { createTestApp } from './helpers/setup'
 import { login } from './helpers/auth'
+import { MemoryModel } from '../../models/memory'
+import * as db from '../../data/mongodb'
 
 let app: Express
 
@@ -20,6 +22,53 @@ before(async () => {
 }, { timeout: 60000 })
 
 void describe('/rest/user/data-export', () => {
+  void it('Export data without authentication is rejected', async () => {
+    const res = await request(app)
+      .post('/rest/user/data-export')
+      .set({ 'content-type': 'application/json' })
+      .send({ format: '1' })
+
+    assert.equal(res.status, 401)
+  })
+
+  void it('Export data with invalid bearer token is rejected', async () => {
+    const res = await request(app)
+      .post('/rest/user/data-export')
+      .set({ Authorization: 'Bearer not-a-valid-token', 'content-type': 'application/json' })
+      .send({ format: '1' })
+
+    assert.equal(res.status, 401)
+  })
+
+  void it('Export data with empty bearer token is rejected', async () => {
+    const res = await request(app)
+      .post('/rest/user/data-export')
+      .set({ Authorization: 'Bearer ', 'content-type': 'application/json' })
+      .send({ format: '1' })
+
+    assert.equal(res.status, 401)
+  })
+
+  void it('Export data with empty JSON body but valid token still succeeds without CAPTCHA', async () => {
+    const { token } = await login(app, { email: 'bjoern.kimminich@gmail.com', password: 'bW9jLmxpYW1nQGhjaW5pbW1pay5ucmVvamI=' })
+    const authHeader = { Authorization: 'Bearer ' + token, 'content-type': 'application/json' }
+
+    const res = await request(app)
+      .post('/rest/user/data-export')
+      .set(authHeader)
+      .send({})
+
+    assert.equal(res.status, 200)
+    assert.equal(res.body.confirmation, 'Your data export will open in a new Browser window.')
+  })
+
+  void it('CAPTCHA cannot be requested without authentication', async () => {
+    const res = await request(app)
+      .get('/rest/image-captcha')
+
+    assert.equal(res.status, 401)
+  })
+
   void it('Export data without use of CAPTCHA', async () => {
     const { token } = await login(app, { email: 'bjoern.kimminich@gmail.com', password: 'bW9jLmxpYW1nQGhjaW5pbW1pay5ucmVvamI=' })
     const authHeader = { Authorization: 'Bearer ' + token, 'content-type': 'application/json' }
@@ -264,5 +313,59 @@ void describe('/rest/user/data-export', () => {
     assert.equal(parsedData.email, 'jim@' + config.get<string>('application.domain'))
     assert.equal(parsedData.memories[0].caption, 'Valid Image')
     assert.ok(parsedData.memories[0].imageUrl.includes('assets/public/images/uploads/valid-image'))
+  })
+
+  void describe('error cases', () => {
+    void it('should return 500 if MemoryModel.findAll fails', async (t) => {
+      const adminEmail = 'admin@' + config.get<string>('application.domain')
+      const { token } = await login(app, { email: adminEmail, password: 'admin123' })
+      const authHeader = { Authorization: 'Bearer ' + token, 'content-type': 'application/json' }
+
+      const originalFindAll = MemoryModel.findAll
+      t.mock.method(MemoryModel, 'findAll', function (this: any, options: any) {
+        if (options?.where && options.where.UserId && !options.where.createdAt && !options.limit) {
+          throw new Error('Memory error')
+        }
+        return originalFindAll.call(this, options)
+      })
+
+      const res = await request(app)
+        .post('/rest/user/data-export')
+        .set(authHeader)
+        .send({ format: '1' })
+
+      assert.equal(res.status, 500)
+      assert.match(res.text, /Memory error/)
+    })
+
+    void it('should return 500 if ordersCollection.find fails', async (t) => {
+      const adminEmail = 'admin@' + config.get<string>('application.domain')
+      const { token } = await login(app, { email: adminEmail, password: 'admin123' })
+      const authHeader = { Authorization: 'Bearer ' + token, 'content-type': 'application/json' }
+      t.mock.method(db.ordersCollection, 'find', async () => { throw new Error('Orders error') })
+
+      const res = await request(app)
+        .post('/rest/user/data-export')
+        .set(authHeader)
+        .send({ format: '1' })
+
+      assert.equal(res.status, 500)
+      assert.match(res.text, /Error retrieving orders/)
+    })
+
+    void it('should return 500 if reviewsCollection.find fails', async (t) => {
+      const adminEmail = 'admin@' + config.get<string>('application.domain')
+      const { token } = await login(app, { email: adminEmail, password: 'admin123' })
+      const authHeader = { Authorization: 'Bearer ' + token, 'content-type': 'application/json' }
+      t.mock.method(db.reviewsCollection, 'find', async () => { throw new Error('Reviews error') })
+
+      const res = await request(app)
+        .post('/rest/user/data-export')
+        .set(authHeader)
+        .send({ format: '1' })
+
+      assert.equal(res.status, 500)
+      assert.match(res.text, /Error retrieving reviews/)
+    })
   })
 })

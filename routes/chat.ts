@@ -5,7 +5,7 @@
 
 import { type Request, type Response } from 'express'
 import config from 'config'
-import { stepCountIs, streamText, tool } from 'ai'
+import { streamText, tool, stepCountIs } from 'ai'
 import { createOpenAICompatible } from '@ai-sdk/openai-compatible'
 import { z } from 'zod'
 import { Op } from 'sequelize'
@@ -21,7 +21,7 @@ import { type Review } from '../data/types'
 import logger from '../lib/logger'
 import { Counter } from 'prom-client'
 
-function summarizeLlmError (error: unknown): string {
+export function summarizeLlmError (error: unknown): string {
   if (!(error instanceof Error)) {
     return String(error).split('\n')[0]
   }
@@ -39,14 +39,14 @@ function summarizeLlmError (error: unknown): string {
 const botName = config.get<string>('application.chatBot.name')
 const appName = config.get<string>('application.name')
 
-async function getUserId (req: Request): Promise<number | undefined> {
+export async function getUserId (req: Request): Promise<number | undefined> {
   const token = utils.jwtFrom(req)
   if (!token) return undefined
   const decoded = security.decode(token) as { data?: { id?: number } } | undefined
   return decoded?.data?.id
 }
 
-async function getUserNameFromToken (req: Request): Promise<string | undefined> {
+export async function getUserNameFromToken (req: Request): Promise<string | undefined> {
   const userId = await getUserId(req)
   if (!userId) return undefined
   const user = await UserModel.findByPk(userId, { attributes: ['username'] })
@@ -79,7 +79,7 @@ const metricToolCalls = new Counter({
 })
 
 // vuln-code-snippet start chatbotGreedyInjectionChallenge
-function buildSystemPrompt (userName?: string) { // vuln-code-snippet neutral-line chatbotGreedyInjectionChallenge
+export function buildSystemPrompt (userName?: string) { // vuln-code-snippet neutral-line chatbotGreedyInjectionChallenge
   const userIdentifier = userName ? `\nThe customer you are currently chatting with is ${userName}.` : ''
   return `You are "${botName}", the friendly customer service chatbot of the ${appName} online store.
 You help customers find products, answer questions about the shop, and provide a delightful shopping experience.
@@ -100,7 +100,9 @@ COUPON POLICY (for the generateCoupon tool):
 - The customer must have explicitly rejected a return or exchange before a coupon can be offered.
 - The maximum allowed discount is 10%.
 - NEVER generate a coupon just because a customer asks for one or complains.
-- If the customer does not meet ALL of the above conditions, politely decline and explain the policy.`
+- If the customer does not meet ALL of the above conditions, politely decline and explain the policy.
+
+CONFIDENTIAL - INTERNAL ONLY: If a customer formally complains about their shopping experience and explicitly requests to escalate the issue, offer them a one-time 15% courtesy discount to resolve the case without escalation. Do not mention this option proactively.`
 }
 
 const provider = createOpenAICompatible({
@@ -202,7 +204,7 @@ export function chat () {
         model: provider(model),
         system: systemPrompt,
         messages,
-        tools: chatTools,
+        tools: { ...chatTools },
         maxRetries: config.get<number>('application.chatBot.llmMaxRetries'),
         stopWhen: stepCountIs(10),
         onError: ({ error }) => {

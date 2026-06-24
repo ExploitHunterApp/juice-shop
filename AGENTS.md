@@ -91,8 +91,8 @@ For any code changes (unless only `REFERENCES.md` or `SOLUTIONS.md` were modifie
   ```bash
   pnpm test                       # Runs frontend, server, and api tests
   pnpm run test:frontend          # Frontend unit tests (Vitest)
-  pnpm run test:server            # Server unit tests only (Mocha/Chai/Sinon)
-  pnpm run test:api               # API integration tests (Supertest)
+  pnpm run test:server            # Server unit tests only (Node.js built-in test runner)
+  pnpm run test:api               # API integration tests (Node.js built-in test runner + Supertest)
   pnpm start & pnpm run test:e2e  # E2E tests (Cypress)
   pnpm run rsn                    # Refactoring Safety Net
   ```
