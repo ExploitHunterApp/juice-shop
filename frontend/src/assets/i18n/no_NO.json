@@ -118,7 +118,7 @@
   "STATUS_PARTIALLY_SOLVED": "delvis løst",
   "STATUS_UNAVAILABLE": "utilgjengelig",
   "STATUS_ALL": "alle",
-  "CALL_FOR_CONTRIBUTIONS": "Har du en idé til en ny utfordring? Har du funnet en sårbarhet som ikke vises her? La oss høre om det på vår <a href='http://gitter.im/bkimminich/juice-shop'><i class='fab fa-gitter'></i>Gitter.im-chat</a> eller ved å åpne et <a href='https://github.com/juice-shop/juice-shop/issues'><i class='fab fa-github'></i>GitHub</a> issue!",
+  "CALL_FOR_CONTRIBUTIONS": "Har du en idé til en ny utfordring? Har du funnet en sårbarhet som ikke vises her? La oss høre om det på vår <a href='http://gitter.im/bkimminich/juice-shop'><i class='fab fa-gitter'></i>Gitter.im-chat</a> eller ved å åpne et <a href='https://github.com/ExploitHunterApp/hard-juice-shop/issues'><i class='fab fa-github'></i>GitHub</a> issue!",
   "CALL_FOR_FEEDBACK": "Hjelp oss å gjøre {{appname}} enda bedre for deg ved å svare på våre <a href='{{questionnaire}}'><i class='fas fa-poll-h'></i>brukerspørsmål</a>!",
   "CHALLENGE_SOLVED": "Du har løst en utfordring: {{challenge}}",
   "INVALID_CONTINUE_CODE": "Ugyldig fortsettelseskode.",

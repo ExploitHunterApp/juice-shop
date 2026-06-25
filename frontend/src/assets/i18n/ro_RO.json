@@ -118,7 +118,7 @@
   "STATUS_PARTIALLY_SOLVED": "parțial rezolvat",
   "STATUS_UNAVAILABLE": "indisponibil",
   "STATUS_ALL": "toate",
-  "CALL_FOR_CONTRIBUTIONS": "Ai o idee pentru o nouă provocare? Ai descoperit o vulnerabilitate care nu este inclusă aici? Anunță-ne prin chatul comunității <a href='http://gitter.im/bkimminich/juice-shop'><i class='fab fa-gitter'></i>Gitter.im</a> sau deschide o nouă problemă pe <a href='https://github.com/juice-shop/juice-shop/issues'><i class='fab fa-github'></i>GitHub</a>!",
+  "CALL_FOR_CONTRIBUTIONS": "Ai o idee pentru o nouă provocare? Ai descoperit o vulnerabilitate care nu este inclusă aici? Anunță-ne prin chatul comunității <a href='http://gitter.im/bkimminich/juice-shop'><i class='fab fa-gitter'></i>Gitter.im</a> sau deschide o nouă problemă pe <a href='https://github.com/ExploitHunterApp/hard-juice-shop/issues'><i class='fab fa-github'></i>GitHub</a>!",
   "CALL_FOR_FEEDBACK": "Te rugăm să ne ajuți să facem {{appname}} și mai bun pentru tine răspunzând la întrebările noastre <a href='{{questionnaire}}'><i class='fas fa-poll-h'></i>de utilizator</a>!",
   "CHALLENGE_SOLVED": "Ai rezolvat cu succes o provocare: {{challenge}}",
   "INVALID_CONTINUE_CODE": "Cod pentru continuare invalid.",

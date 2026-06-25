@@ -18,9 +18,9 @@ before(async () => {
 }, { timeout: 60000 })
 
 void describe('/redirect', () => {
-  void it('GET redirected to https://github.com/juice-shop/juice-shop when this URL is passed as "to" parameter', async () => {
+  void it('GET redirected to https://github.com/ExploitHunterApp/hard-juice-shop when this URL is passed as "to" parameter', async () => {
     const res = await request(app)
-      .get('/redirect?to=https://github.com/juice-shop/juice-shop')
+      .get('/redirect?to=https://github.com/ExploitHunterApp/hard-juice-shop')
       .redirects(0)
     assert.equal(res.status, 302)
   })
@@ -100,7 +100,7 @@ void describe('/redirect', () => {
 
   void it('GET redirected to target URL in "to" parameter when a allow-listed URL is part of the query string', async () => {
     const res = await request(app)
-      .get('/redirect?to=/score-board?satisfyIndexOf=https://github.com/juice-shop/juice-shop')
+      .get('/redirect?to=/score-board?satisfyIndexOf=https://github.com/ExploitHunterApp/hard-juice-shop')
       .redirects(1)
     assert.equal(res.status, 200)
     assert.ok(res.headers['content-type']?.includes('text/html'))

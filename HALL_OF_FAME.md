@@ -80,4 +80,4 @@ Additional thanks goes to the contractors we were able to hire for specific work
 
 ## Stargazers (over time)
 
-[![Stargazers over time](https://starchart.cc/juice-shop/juice-shop.svg)](https://starchart.cc/juice-shop/juice-shop)
+[![Stargazers over time](https://starchart.cc/ExploitHunterApp/hard-juice-shop.svg)](https://starchart.cc/ExploitHunterApp/hard-juice-shop)

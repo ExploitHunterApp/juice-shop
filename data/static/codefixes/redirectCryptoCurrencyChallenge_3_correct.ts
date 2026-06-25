@@ -1,5 +1,5 @@
 export const redirectAllowlist = new Set([
-  'https://github.com/juice-shop/juice-shop',
+  'https://github.com/ExploitHunterApp/hard-juice-shop',
   'http://shop.spreadshirt.com/juiceshop',
   'http://shop.spreadshirt.de/juiceshop',
   'https://www.stickeryou.com/products/owasp-juice-shop/794',

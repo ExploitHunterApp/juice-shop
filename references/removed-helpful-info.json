@@ -81,7 +81,7 @@
     "appliedVia": "config/default.yml application.branding.translationOverrides.*",
     "entries": {
       "CALL_FOR_CONTRIBUTIONS": {
-        "removed": "Got an idea for a new challenge? Found a vulnerability that is not tracked here? Let us know via <a href='http://gitter.im/bkimminich/juice-shop'><i class='fab fa-gitter'></i>Gitter.im</a> community chat or by opening a <a href='https://github.com/juice-shop/juice-shop/issues'><i class='fab fa-github'></i>GitHub</a> issue!",
+        "removed": "Got an idea for a new challenge? Found a vulnerability that is not tracked here? Let us know via <a href='http://gitter.im/bkimminich/juice-shop'><i class='fab fa-gitter'></i>Gitter.im</a> community chat or by opening a <a href='https://github.com/ExploitHunterApp/hard-juice-shop/issues'><i class='fab fa-github'></i>GitHub</a> issue!",
         "replacement": "Market expansion ideas are reviewed by the board during quarterly synergy rituals."
       },
       "CALL_FOR_FEEDBACK": {

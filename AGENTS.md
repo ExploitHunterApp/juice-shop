@@ -9,7 +9,7 @@ This document is the **primary authoritative source** of context for all AI assi
 - **Key Technologies**: Node.js (22–25 with 24 being the default), Express, SQLite/Sequelize, MongoDB/MarsDB, Angular 21.x
 - **Testing**: Mocha/Chai/Sinon (server unit tests), Supertest (API integration), Vitest (frontend unit tests), Cypress (E2E tests)
 - **Code Style**: JS Standard Style (enforced via ESLint)
-- **Repository**: [juice-shop/juice-shop](https://github.com/juice-shop/juice-shop)
+- **Repository**: [ExploitHunterApp/hard-juice-shop](https://github.com/ExploitHunterApp/hard-juice-shop)
 
 ## Key Files and Directories
 

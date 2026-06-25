@@ -116,10 +116,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/juice-shop/juice-shop.git"
+    "url": "https://github.com/ExploitHunterApp/hard-juice-shop.git"
   },
   "bugs": {
-    "url": "https://github.com/juice-shop/juice-shop/issues"
+    "url": "https://github.com/ExploitHunterApp/hard-juice-shop/issues"
   },
   "license": "MIT",
   "scripts": {

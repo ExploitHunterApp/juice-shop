@@ -1,18 +1,18 @@
-# ![Juice Shop Logo](https://raw.githubusercontent.com/juice-shop/juice-shop/master/frontend/src/assets/public/images/JuiceShop_Logo_100px.png) ExploitHunter.app's Customizable Juice Shop
+# ![Juice Shop Logo](https://raw.githubusercontent.com/ExploitHunterApp/hard-juice-shop/master/frontend/src/assets/public/images/JuiceShop_Logo_100px.png) ExploitHunter.app's Customizable Juice Shop
 
 Original project: [OWASP Juice Shop](https://owasp-juice.shop)
 
 [![OWASP Flagship](https://img.shields.io/badge/owasp-flagship%20project-48A646.svg)](https://owasp.org/projects/#sec-flagships)
-[![GitHub release](https://img.shields.io/github/release/juice-shop/juice-shop.svg)](https://github.com/juice-shop/juice-shop/releases/latest)
+[![GitHub release](https://img.shields.io/github/release/ExploitHunterApp/hard-juice-shop.svg)](https://github.com/ExploitHunterApp/hard-juice-shop/releases/latest)
 [![Twitter Follow](https://img.shields.io/twitter/follow/owasp_juiceshop.svg?style=social&label=Follow)](https://twitter.com/owasp_juiceshop)
 [![Subreddit subscribers](https://img.shields.io/reddit/subreddit-subscribers/owasp_juiceshop?style=social)](https://reddit.com/r/owasp_juiceshop)
 
-[![CI/CD Pipeline](https://github.com/juice-shop/juice-shop/actions/workflows/ci.yml/badge.svg?branch=develop)](https://github.com/juice-shop/juice-shop/actions/workflows/ci.yml)
-[![Release Pipeline](https://github.com/juice-shop/juice-shop/actions/workflows/release.yml/badge.svg)](https://github.com/juice-shop/juice-shop/actions/workflows/release.yml)
-[![Coverage Status](https://coveralls.io/repos/github/juice-shop/juice-shop/badge.svg?branch=develop)](https://coveralls.io/github/juice-shop/juice-shop?branch=develop)
+[![CI/CD Pipeline](https://github.com/ExploitHunterApp/hard-juice-shop/actions/workflows/ci.yml/badge.svg?branch=develop)](https://github.com/ExploitHunterApp/hard-juice-shop/actions/workflows/ci.yml)
+[![Release Pipeline](https://github.com/ExploitHunterApp/hard-juice-shop/actions/workflows/release.yml/badge.svg)](https://github.com/ExploitHunterApp/hard-juice-shop/actions/workflows/release.yml)
+[![Coverage Status](https://coveralls.io/repos/github/ExploitHunterApp/hard-juice-shop/badge.svg?branch=develop)](https://coveralls.io/github/ExploitHunterApp/hard-juice-shop?branch=develop)
 [![Cypress tests](https://img.shields.io/endpoint?url=https://dashboard.cypress.io/badge/simple/3hrkhu/develop&style=flat&logo=cypress)](https://dashboard.cypress.io/projects/3hrkhu/runs)
 [![OpenSSF Best Practices](https://www.bestpractices.dev/projects/223/badge)](https://www.bestpractices.dev/projects/223)
-![GitHub stars](https://img.shields.io/github/stars/juice-shop/juice-shop.svg?label=GitHub%20%E2%98%85&style=flat)
+![GitHub stars](https://img.shields.io/github/stars/ExploitHunterApp/hard-juice-shop.svg?label=GitHub%20%E2%98%85&style=flat)
 [![Static Badge](https://img.shields.io/badge/OWASP-Code_of_Conduct-blue)](CODE_OF_CONDUCT.md)
 
 OWASP Juice Shop is probably the most modern and sophisticated insecure web application! It can be used in security
@@ -72,11 +72,11 @@ This fork is tuned as a configurable ecommerce target for automated agents.
 
 ### From Sources
 
-![GitHub repo size](https://img.shields.io/github/repo-size/juice-shop/juice-shop.svg)
+![GitHub repo size](https://img.shields.io/github/repo-size/ExploitHunterApp/hard-juice-shop.svg)
 
 1. Install [node.js](#nodejs-version-compatibility)
-2. Run `git clone https://github.com/juice-shop/juice-shop.git --depth 1` (or
-   clone [your own fork](https://github.com/juice-shop/juice-shop/fork)
+2. Run `git clone https://github.com/ExploitHunterApp/hard-juice-shop.git --depth 1` (or
+   clone [your own fork](https://github.com/ExploitHunterApp/hard-juice-shop/fork)
    of the repository)
 3. Go into the cloned folder with `cd juice-shop`
 4. Run `corepack enable && corepack prepare pnpm@11.1.1 --activate`
@@ -86,14 +86,14 @@ This fork is tuned as a configurable ecommerce target for automated agents.
 
 ### Packaged Distributions
 
-[![GitHub release](https://img.shields.io/github/downloads/juice-shop/juice-shop/total.svg)](https://github.com/juice-shop/juice-shop/releases/latest)
+[![GitHub release](https://img.shields.io/github/downloads/ExploitHunterApp/hard-juice-shop/total.svg)](https://github.com/ExploitHunterApp/hard-juice-shop/releases/latest)
 [![SourceForge](https://img.shields.io/sourceforge/dm/juice-shop?label=sourceforge%20downloads)](https://sourceforge.net/projects/juice-shop/)
 [![SourceForge](https://img.shields.io/sourceforge/dt/juice-shop?label=sourceforge%20downloads)](https://sourceforge.net/projects/juice-shop/)
 
 1. Install a 64bit [node.js](#nodejs-version-compatibility) on your Windows, MacOS or Linux machine
 2. Download `juice-shop-<version>_<node-version>_<os>_x64.zip` (or
    `.tgz`) attached to
-   [latest release](https://github.com/juice-shop/juice-shop/releases/latest)
+   [latest release](https://github.com/ExploitHunterApp/hard-juice-shop/releases/latest)
 3. Unpack and `cd` into the unpacked folder
 4. Run `pnpm start`
 5. Browse to <http://localhost:3000>
@@ -186,16 +186,16 @@ original product name.
 
 1. Install [Vagrant](https://www.vagrantup.com/downloads.html) and
    [Virtualbox](https://www.virtualbox.org/wiki/Downloads)
-2. Run `git clone https://github.com/juice-shop/juice-shop.git` (or
-   clone [your own fork](https://github.com/juice-shop/juice-shop/fork)
+2. Run `git clone https://github.com/ExploitHunterApp/hard-juice-shop.git` (or
+   clone [your own fork](https://github.com/ExploitHunterApp/hard-juice-shop/fork)
    of the repository)
 3. Run `cd vagrant && vagrant up`
 4. Browse to [192.168.56.110](http://192.168.56.110)
 
 ## Node.js version compatibility
 
-![GitHub package.json dynamic](https://img.shields.io/github/package-json/cpu/juice-shop/juice-shop)
-![GitHub package.json dynamic](https://img.shields.io/github/package-json/os/juice-shop/juice-shop)
+![GitHub package.json dynamic](https://img.shields.io/github/package-json/cpu/ExploitHunterApp/hard-juice-shop)
+![GitHub package.json dynamic](https://img.shields.io/github/package-json/os/ExploitHunterApp/hard-juice-shop)
 
 OWASP Juice Shop officially supports the following versions of
 [node.js](http://nodejs.org) in line with the official
@@ -254,10 +254,10 @@ For a list of all contributors to the OWASP Juice Shop please visit our
 
 ## Licensing
 
-[![license](https://img.shields.io/github/license/juice-shop/juice-shop.svg)](LICENSE)
+[![license](https://img.shields.io/github/license/ExploitHunterApp/hard-juice-shop.svg)](LICENSE)
 
 This program is free software: you can redistribute it and/or modify it under the terms of the [MIT license](LICENSE).
 OWASP Juice Shop and any contributions are Copyright © by Bjoern Kimminich & the OWASP Juice Shop contributors
 2014-2026.
 
-![Juice Shop Logo](https://raw.githubusercontent.com/juice-shop/juice-shop/master/frontend/src/assets/public/images/JuiceShop_Logo_400px.png)
+![Juice Shop Logo](https://raw.githubusercontent.com/ExploitHunterApp/hard-juice-shop/master/frontend/src/assets/public/images/JuiceShop_Logo_400px.png)
