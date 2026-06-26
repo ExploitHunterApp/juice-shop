@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { TranslateService, TranslateModule } from '@ngx-translate/core'
+import { TranslateModule } from '@ngx-translate/core'
 import { ChallengeService } from '../Services/challenge.service'
 import { ConfigurationService } from '../Services/configuration.service'
 import { ChangeDetectorRef, Component, NgZone, type OnInit, inject } from '@angular/core'
@@ -14,7 +14,6 @@ import { MatIconModule } from '@angular/material/icon'
 import { MatButtonModule } from '@angular/material/button'
 import { MatCardModule } from '@angular/material/card'
 import { LowerCasePipe } from '@angular/common'
-import { firstValueFrom } from 'rxjs'
 import { SnackBarHelperService } from '../Services/snack-bar-helper.service'
 import { Router } from '@angular/router'
 
@@ -47,7 +46,6 @@ export class ChallengeSolvedNotificationComponent implements OnInit {
   private readonly configurationService = inject(ConfigurationService)
   private readonly challengeService = inject(ChallengeService)
   private readonly countryMappingService = inject(CountryMappingService)
-  private readonly translate = inject(TranslateService)
   private readonly cookieService = inject(CookieService)
   private readonly ref = inject(ChangeDetectorRef)
   private readonly io = inject(SocketIoService)
@@ -64,16 +62,8 @@ export class ChallengeSolvedNotificationComponent implements OnInit {
     this.ngZone.runOutsideAngular(() => {
       this.io.socket().on('challenge solved', (data: ChallengeSolvedMessage) => {
         if (data?.challenge) {
-          if (!data.hidden) {
-            this.showNotification(data)
-          }
           if (!data.isRestore) {
             this.saveProgress()
-            if (!data.hidden) {
-              import('../../confetti').then(module => {
-                module.shootConfetti()
-              })
-            }
           }
           this.io.socket().emit('notification received', data.flag)
         }
@@ -119,22 +109,7 @@ export class ChallengeSolvedNotificationComponent implements OnInit {
   }
 
   showNotification (challenge: ChallengeSolvedMessage) {
-    firstValueFrom(this.translate.get('CHALLENGE_SOLVED', { challenge: challenge.challenge }))
-      .then((message) => {
-        let country
-        if (this.showCtfCountryDetailsInNotifications && this.showCtfCountryDetailsInNotifications !== 'none') {
-          country = this.countryMap[challenge.key]
-        }
-        this.notifications.push({
-          message: String(message),
-          key: challenge.key,
-          flag: challenge.flag,
-          country,
-          copied: false,
-          codingChallenge: challenge.codingChallenge ?? false,
-        })
-        this.ref.detectChanges()
-      })
+    void challenge
   }
 
   saveProgress () {

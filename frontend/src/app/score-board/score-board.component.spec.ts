@@ -4,12 +4,9 @@ import { type ComponentFixture, TestBed } from '@angular/core/testing'
 import { RouterTestingModule } from '@angular/router/testing'
 import { MatIconModule } from '@angular/material/icon'
 import { TranslateModule } from '@ngx-translate/core'
-import { of, throwError } from 'rxjs'
+import { of } from 'rxjs'
 
-import { HackingChallengeProgressScoreCardComponent } from './components/hacking-challenge-progress-score-card/hacking-challenge-progress-score-card.component'
-import { CodingChallengeProgressScoreCardComponent } from './components/coding-challenge-progress-score-card/coding-challenge-progress-score-card.component'
 import { ChallengesUnavailableWarningComponent } from './components/challenges-unavailable-warning/challenges-unavailable-warning.component'
-import { DifficultyOverviewScoreCardComponent } from './components/difficulty-overview-score-card/difficulty-overview-score-card.component'
 import { TutorialModeWarningComponent } from './components/tutorial-mode-warning/tutorial-mode-warning.component'
 import { WarningCardComponent } from './components/warning-card/warning-card.component'
 import { ScoreCardComponent } from './components/score-card/score-card.component'
@@ -67,9 +64,6 @@ describe('ScoreBoardComponent', () => {
                 MatProgressSpinnerModule,
                 MatIconModule,
                 ScoreBoardComponent,
-                HackingChallengeProgressScoreCardComponent,
-                CodingChallengeProgressScoreCardComponent,
-                DifficultyOverviewScoreCardComponent,
                 WarningCardComponent,
                 ChallengesUnavailableWarningComponent,
                 TutorialModeWarningComponent,
@@ -134,13 +128,6 @@ describe('ScoreBoardComponent', () => {
 
     it('should not filter any challenges on default settings', (): void => {
         expect(component.filteredChallenges).toHaveLength(3)
-    })
-
-    it('should handle error when unlocking a hint', (): void => {
-        hintService.put.mockReturnValue(throwError('Error'))
-        console.log = vi.fn()
-        component.unlockHint(123)
-        expect(console.log).toHaveBeenCalledWith('Error')
     })
 
     it('should mark challenges as solved on "challenge solved" websocket', (): void => {
@@ -209,31 +196,6 @@ describe('ScoreBoardComponent', () => {
             const navSpy = vi.spyOn(router, 'navigate').mockResolvedValue(true)
             component.reset()
             expect(navSpy).toHaveBeenCalled()
-        })
-    })
-
-    describe('repeatChallengeNotification', () => {
-        it('should request the backend to repeat the notification for the matching challenge', async () => {
-            challengeService.repeatNotification = vi.fn().mockReturnValue(of('ok'))
-            await component.repeatChallengeNotification('challenge-2')
-            expect(challengeService.repeatNotification).toHaveBeenCalledWith(encodeURIComponent('Challenge 2'))
-        })
-    })
-
-    describe('unlockHint', () => {
-        it('should re-run ngOnInit and remember the unlocked challenge key on success', () => {
-            hintService.put.mockReturnValue(of({}))
-            const spy = vi.spyOn(component, 'ngOnInit')
-            component.unlockHint(7, 'challenge-3')
-            expect(component.lastUnlockedChallengeKey).toBe('challenge-3')
-            expect(spy).toHaveBeenCalled()
-        })
-
-        it('should clear the last unlocked challenge key when no key is provided', () => {
-            hintService.put.mockReturnValue(of({}))
-            component.lastUnlockedChallengeKey = 'previous'
-            component.unlockHint(7)
-            expect(component.lastUnlockedChallengeKey).toBeNull()
         })
     })
 

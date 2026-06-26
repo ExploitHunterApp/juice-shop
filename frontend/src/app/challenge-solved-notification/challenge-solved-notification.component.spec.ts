@@ -378,12 +378,12 @@ describe('ChallengeSolvedNotificationComponent', () => {
             expect(socket.emit).toHaveBeenCalledWith('notification received', 'F')
         })
 
-        it('should show notification and save progress for a visible, non-restored challenge', () => {
+        it('should save progress without showing notification for a visible, non-restored challenge', () => {
             component.ngOnInit()
             const showSpy = vi.spyOn(component, 'showNotification').mockImplementation(() => { })
             const saveSpy = vi.spyOn(component, 'saveProgress').mockImplementation(() => { })
             onCallback({ challenge: 'Some Challenge', hidden: false, isRestore: false, flag: 'F', key: 'k' })
-            expect(showSpy).toHaveBeenCalled()
+            expect(showSpy).not.toHaveBeenCalled()
             expect(saveSpy).toHaveBeenCalled()
         })
     })

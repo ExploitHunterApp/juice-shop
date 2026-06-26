@@ -1,11 +1,9 @@
-import { Component, input, viewChild, inject, effect } from '@angular/core'
+import { Component, input, inject } from '@angular/core'
 import { EnrichedChallenge } from '../../types/EnrichedChallenge'
 import { Config } from 'src/app/Services/configuration.service'
 import { TranslateModule } from '@ngx-translate/core'
 import { MatIconModule } from '@angular/material/icon'
 import { MatTooltip } from '@angular/material/tooltip'
-import { RouterLink } from '@angular/router'
-import { NgClass } from '@angular/common'
 import { DifficultyStarsComponent } from '../difficulty-stars/difficulty-stars.component'
 import { SnackBarHelperService } from 'src/app/Services/snack-bar-helper.service'
 
@@ -13,22 +11,15 @@ import { SnackBarHelperService } from 'src/app/Services/snack-bar-helper.service
   selector: 'challenge-card',
   templateUrl: './challenge-card.component.html',
   styleUrls: ['./challenge-card.component.scss'],
-  imports: [DifficultyStarsComponent, MatTooltip, MatIconModule, NgClass, TranslateModule, RouterLink],
+  imports: [DifficultyStarsComponent, MatTooltip, MatIconModule, TranslateModule],
   host: { '[attr.id]': 'challengeId()' }
 })
 export class ChallengeCardComponent {
   private readonly snackBarHelperService = inject(SnackBarHelperService)
 
   readonly challenge = input.required<EnrichedChallenge>()
-  readonly repeatChallengeNotification = input<(challengeKey: string) => void>()
-  readonly unlockHint = input<(hintId: number, challengeKey?: string) => void>()
   readonly applicationConfiguration = input.required<Config>()
-  readonly lastUnlockedChallengeKey = input<string | null>(null)
   readonly challengeId = input<string>()
-
-  readonly hintTooltip = viewChild<MatTooltip>('hintTooltip')
-
-  private previousHintsUnlocked?: number
 
   hasInstructions: (challengeName: string) => boolean = () => false
   startHackingInstructorFor: (challengeName: string) => Promise<void> = async () => {}
@@ -37,21 +28,6 @@ export class ChallengeCardComponent {
     void import('../../../../hacking-instructor').then(({ hasInstructions, startHackingInstructorFor }) => {
       this.hasInstructions = hasInstructions
       this.startHackingInstructorFor = startHackingInstructorFor
-    })
-
-    effect(() => {
-      const challenge = this.challenge()
-      const lastUnlockedKey = this.lastUnlockedChallengeKey()
-      const currentHintsUnlocked = challenge?.hintsUnlocked
-
-      if (
-        lastUnlockedKey === challenge?.key &&
-        this.previousHintsUnlocked !== undefined &&
-        currentHintsUnlocked !== this.previousHintsUnlocked
-      ) {
-        queueMicrotask(() => setTimeout(() => { this.hintTooltip()?.show() }, 50))
-      }
-      this.previousHintsUnlocked = currentHintsUnlocked
     })
   }
 

@@ -1,9 +1,3 @@
-<div class="score-row">
-  <hacking-challenge-progress-score-card [allChallenges]="allChallenges" />
-  <coding-challenge-progress-score-card [allChallenges]="allChallenges" />
-  <difficulty-overview-score-card [allChallenges]="allChallenges" />
-</div>
-
 @if (applicationConfiguration?.challenges.restrictToTutorialsFirst === false) {
 <filter-settings [filterSetting]="filterSetting" (filterSettingChange)="onFilterSettingUpdate($event)"
   [allChallenges]="allChallenges" [reset]="reset.bind(this)"></filter-settings>
@@ -24,9 +18,7 @@
 <div class="challenges">
   @for (challenge of filteredChallenges; track getChallengeKey($index, challenge)) {
   <challenge-card [challenge]="challenge" [applicationConfiguration]="applicationConfiguration"
-    [repeatChallengeNotification]="repeatChallengeNotification.bind(this)" [unlockHint]="unlockHint.bind(this)"
-    [lastUnlockedChallengeKey]="lastUnlockedChallengeKey" [challengeId]="'challenge-' + challenge.key"
-    [ngClass]="{ solved: challenge.solved, unsolved: !challenge.solved, disabled: challenge.disabledEnv !== null }" />
+    [challengeId]="'challenge-' + challenge.key" [class.disabled]="challenge.disabledEnv !== null" />
   }
 </div>
 } @else {

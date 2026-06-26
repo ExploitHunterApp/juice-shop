@@ -1,10 +1,9 @@
 import { Component, NgZone, type OnDestroy, type OnInit, inject } from '@angular/core'
-import { type Subscription, combineLatest, firstValueFrom } from 'rxjs'
+import { type Subscription, combineLatest } from 'rxjs'
 import { MatProgressSpinner } from '@angular/material/progress-spinner'
 import { ActivatedRoute, Router } from '@angular/router'
 import { DomSanitizer } from '@angular/platform-browser'
 import { TranslateModule } from '@ngx-translate/core'
-import { NgClass } from '@angular/common'
 
 import { HintService } from '../Services/hint.service'
 import { sortChallenges } from './helpers/challenge-sorting'
@@ -18,10 +17,7 @@ import { DEFAULT_FILTER_SETTING, type FilterSetting } from './filter-settings/Fi
 import { ChallengeCardComponent } from './components/challenge-card/challenge-card.component'
 import { FilterSettingsComponent } from './components/filter-settings/filter-settings.component'
 import { TutorialModeWarningComponent } from './components/tutorial-mode-warning/tutorial-mode-warning.component'
-import { DifficultyOverviewScoreCardComponent } from './components/difficulty-overview-score-card/difficulty-overview-score-card.component'
 import { ChallengesUnavailableWarningComponent } from './components/challenges-unavailable-warning/challenges-unavailable-warning.component'
-import { CodingChallengeProgressScoreCardComponent } from './components/coding-challenge-progress-score-card/coding-challenge-progress-score-card.component'
-import { HackingChallengeProgressScoreCardComponent } from './components/hacking-challenge-progress-score-card/hacking-challenge-progress-score-card.component'
 
 interface ChallengeSolvedWebsocket {
   key: string
@@ -40,7 +36,7 @@ interface CodeChallengeSolvedWebsocket {
   selector: 'app-score-board',
   templateUrl: './score-board.component.html',
   styleUrls: ['./score-board.component.scss'],
-  imports: [HackingChallengeProgressScoreCardComponent, CodingChallengeProgressScoreCardComponent, DifficultyOverviewScoreCardComponent, FilterSettingsComponent, MatProgressSpinner, ChallengesUnavailableWarningComponent, TutorialModeWarningComponent, ChallengeCardComponent, NgClass, TranslateModule]
+  imports: [FilterSettingsComponent, MatProgressSpinner, ChallengesUnavailableWarningComponent, TutorialModeWarningComponent, ChallengeCardComponent, TranslateModule]
 })
 export class ScoreBoardComponent implements OnInit, OnDestroy {
   private readonly challengeService = inject(ChallengeService)
@@ -56,7 +52,6 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
   public filteredChallenges: EnrichedChallenge[] = []
   public filterSetting: FilterSetting = structuredClone(DEFAULT_FILTER_SETTING)
   public applicationConfiguration: Config | null = null
-  public lastUnlockedChallengeKey: string | null = null
 
   public isInitialized = false
 
@@ -157,6 +152,7 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
     this.filteredChallenges = sortChallenges(
       filterChallenges(this.allChallenges, {
         ...this.filterSetting,
+        status: null,
         restrictToTutorialChallengesFirst: this.applicationConfiguration?.challenges?.restrictToTutorialsFirst ?? true
       })
     )
@@ -170,21 +166,6 @@ export class ScoreBoardComponent implements OnInit, OnDestroy {
   reset () {
     this.router.navigate([], {
       queryParams: toQueryParams(DEFAULT_FILTER_SETTING)
-    })
-  }
-
-  async repeatChallengeNotification (challengeKey: string) {
-    const challenge = this.allChallenges.find((challenge) => challenge.key === challengeKey)
-    await firstValueFrom(this.challengeService.repeatNotification(encodeURIComponent(challenge.name)))
-  }
-
-  unlockHint (hintId: number, challengeKey?: string) {
-    this.lastUnlockedChallengeKey = challengeKey ?? null
-    this.hintService.put(hintId, { unlocked: true }).subscribe({
-      next: () => {
-        this.ngOnInit()
-      },
-      error: (err) => { console.log(err) }
     })
   }
 

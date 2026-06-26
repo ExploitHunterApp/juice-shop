@@ -65,11 +65,11 @@ describe('ChallengeCard', () => {
             .toBeFalsy()
     })
 
-    it('should show a mitigation link when challenge has it and is solved', () => {
+    it('should not show a mitigation link even when challenge is solved', () => {
         fixture.componentRef.setInput('challenge', { ...defaultChallenge, solved: true })
         fixture.detectChanges()
         expect(fixture.nativeElement.querySelector('[aria-label="Vulnerability mitigation link"]'))
-            .toBeTruthy()
+            .toBeFalsy()
     })
 
     it('should copy payload to clipboard and show confirmation', async () => {
@@ -202,29 +202,6 @@ describe('ChallengeCard', () => {
         })
     })
 
-    describe('hint tooltip effect', () => {
-        it('should trigger hintTooltip.show when hintsUnlocked changes for last unlocked challenge', async () => {
-            vi.useFakeTimers()
-            fixture.componentRef.setInput('challenge', { ...defaultChallenge, key: 'k1', hintsUnlocked: 0 })
-            fixture.componentRef.setInput('lastUnlockedChallengeKey', 'k1')
-            fixture.detectChanges()
-
-            const tooltip = component.hintTooltip()
-            const showSpy = tooltip ? vi.spyOn(tooltip, 'show') : null
-
-            fixture.componentRef.setInput('challenge', { ...defaultChallenge, key: 'k1', hintsUnlocked: 1 })
-            fixture.detectChanges()
-
-            await Promise.resolve()
-            vi.advanceTimersByTime(100)
-
-            if (showSpy) {
-                expect(showSpy).toHaveBeenCalled()
-            }
-            vi.useRealTimers()
-        })
-    })
-
     describe('default async hooks', () => {
         it('should expose noop defaults for hasInstructions and startHackingInstructorFor', async () => {
             expect(component.hasInstructions('anything')).toBe(false)
@@ -291,7 +268,7 @@ describe('ChallengeCard', () => {
             expect(badges.length).toBeGreaterThan(0)
         })
 
-        it('should render the coding-challenge badge with status when applicable', () => {
+        it('should not render the coding-challenge result badge when applicable', () => {
             fixture.componentRef.setInput('challenge', {
                 ...defaultChallenge,
                 key: 'k1',
@@ -301,9 +278,9 @@ describe('ChallengeCard', () => {
             })
             fixture.detectChanges()
             const codingBadge = (fixture.nativeElement as HTMLElement).querySelector('.badge.not-completable .badge-status')
-            expect(codingBadge?.textContent).toContain('1/2')
+            expect(codingBadge).toBeFalsy()
             const completed = (fixture.nativeElement as HTMLElement).querySelector('.badge.partially-completed')
-            expect(completed).toBeTruthy()
+            expect(completed).toBeFalsy()
         })
 
         it('should not render the coding-challenge badge when codingChallengesEnabled is "never"', () => {
@@ -317,12 +294,12 @@ describe('ChallengeCard', () => {
             expect(badge).toBeFalsy()
         })
 
-        it('should render the repeat-flag badge for solved challenges in CTF mode', () => {
+        it('should not render the repeat-flag badge for solved challenges in CTF mode', () => {
             fixture.componentRef.setInput('challenge', { ...defaultChallenge, key: 'k1', solved: true })
             fixture.detectChanges()
             const flag = Array.from((fixture.nativeElement as HTMLElement).querySelectorAll('mat-icon'))
                 .find((el) => el.textContent?.includes('flag_outline'))
-            expect(flag).toBeTruthy()
+            expect(flag).toBeFalsy()
         })
 
         it('should not render the repeat-flag badge when CTF flags-in-notifications is disabled', () => {
@@ -346,7 +323,7 @@ describe('ChallengeCard', () => {
             expect(school).toBeTruthy()
         })
 
-        it('should render the hint badge with counts and lightbulb icon when hints are available', () => {
+        it('should not render the hint badge with counts when hints are available', () => {
             fixture.componentRef.setInput('challenge', {
                 ...defaultChallenge,
                 key: 'k1',
@@ -358,11 +335,10 @@ describe('ChallengeCard', () => {
             fixture.detectChanges()
             const hintBadge = Array.from((fixture.nativeElement as HTMLElement).querySelectorAll('.badge'))
                 .find((b) => b.textContent?.includes('1/3'))
-            expect(hintBadge).toBeTruthy()
-            expect(hintBadge?.querySelector('mat-icon')?.textContent).toContain('lightbulb_outlined')
+            expect(hintBadge).toBeFalsy()
         })
 
-        it('should disable the hint badge and show solid lightbulb when no next hint is available', () => {
+        it('should not render the completed hint badge when no next hint is available', () => {
             fixture.componentRef.setInput('challenge', {
                 ...defaultChallenge,
                 key: 'k1',
@@ -374,9 +350,7 @@ describe('ChallengeCard', () => {
             fixture.detectChanges()
             const hintBadge = Array.from((fixture.nativeElement as HTMLElement).querySelectorAll('.badge'))
                 .find((b) => b.textContent?.includes('3/3')) as HTMLButtonElement | undefined
-            expect(hintBadge).toBeTruthy()
-            expect(hintBadge?.disabled).toBe(true)
-            expect(hintBadge?.querySelector('mat-icon')?.textContent?.trim()).toBe('lightbulb')
+            expect(hintBadge).toBeFalsy()
         })
     })
 })
